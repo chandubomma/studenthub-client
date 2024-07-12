@@ -3,7 +3,7 @@ import { Routes, Route } from 'react-router-dom';
 import Navbar from './components/navigation/Navbar';
 import Home from './pages/Home';
 import Guide from './pages/Guide';
-import GuidesList from './pages/GuidesList';
+import GuidesList from './pages/GuideList';
 import MeetingRequests from './pages/MeetingRequests';
 import Meetings from './pages/Meetings';
 import MeetingRoom from './pages/MeetingRoom';
@@ -12,7 +12,7 @@ import SignUp from './pages/SignUp';
 import Account from './pages/Account';
 import About from './pages/About';
 import ProtectedRoute from './components/navigation/ProtectedRoute';
-
+import AuthProvider from './context/AuthContext';
 
 const App = () => {
   return (
