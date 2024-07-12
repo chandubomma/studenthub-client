@@ -16,7 +16,7 @@ import ProtectedRoute from './components/navigation/ProtectedRoute';
 
 const App = () => {
   return (
-      <>
+    <AuthProvider>
         <Navbar />
         <Routes>
           <Route path="/" element={<Home />} />
@@ -31,7 +31,7 @@ const App = () => {
           <Route path="/account" element={<ProtectedRoute><Account /></ProtectedRoute>} />
           <Route path="/about" element={<About />} />
         </Routes>
-    </>
+    </AuthProvider>
   );
 };
 
