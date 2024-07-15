@@ -5,7 +5,7 @@ import React from 'react';
 const MeetingCard = ({ meeting }) => {
 
     const handleJoinMeeting = () => {
-        window.location.href = `/guide/meeting/${meeting.id}`;
+        window.location.href = `/meeting/${meeting.id}`;
     };
 
     const handleCancelMeeting = async () => {
