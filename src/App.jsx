@@ -12,11 +12,13 @@ import SignUp from './pages/SignUp';
 import Account from './pages/Account';
 import About from './pages/About';
 import ProtectedRoute from './components/navigation/ProtectedRoute';
-import AuthProvider from './context/AuthContext';
+import {AuthProvider} from './context/AuthContext';
+import SocketProvider from './context/SocketContext';
 
 const App = () => {
   return (
     <AuthProvider>
+    <SocketProvider>
         <Navbar />
         <Routes>
           <Route path="/" element={<Home />} />
@@ -24,13 +26,14 @@ const App = () => {
             <Route path="list" element={<GuidesList />} />
             <Route path="requests" element={<ProtectedRoute><MeetingRequests /></ProtectedRoute>} />
             <Route path="meetings" element={<ProtectedRoute><Meetings /></ProtectedRoute>} />
-            <Route path="meeting/:id" element={<ProtectedRoute><MeetingRoom /></ProtectedRoute>} />
+            <Route path="meeting/:id" element={<MeetingRoom />} />
           </Route>
           <Route path="/signin" element={<SignIn />} />
           <Route path="/signup" element={<SignUp />} />
           <Route path="/account" element={<ProtectedRoute><Account /></ProtectedRoute>} />
           <Route path="/about" element={<About />} />
         </Routes>
+    </SocketProvider>
     </AuthProvider>
   );
 };
