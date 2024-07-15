@@ -4,12 +4,15 @@ const useWebRTC = (socket, meetingId) => {
   const [peers, setPeers] = useState([]);
   const [localStream, setLocalStream] = useState(null);
   const [isLocalStreamReady, setIsLocalStreamReady] = useState(false);
+  const [videoEnabled, setVideoEnabled] = useState(true);
+  const [audioEnabled, setAudioEnabled] = useState(true);
   const peerConnections = useRef({});
+
 
   useEffect(() => {
     if (!socket) return;
 
-    navigator.mediaDevices.getUserMedia({ video: true, audio: true })
+    navigator.mediaDevices.getUserMedia({ video: videoEnabled, audio: audioEnabled })
       .then(stream => {
         setLocalStream(stream);
         setIsLocalStreamReady(true);
@@ -18,7 +21,7 @@ const useWebRTC = (socket, meetingId) => {
         console.error('Error accessing media devices.', error);
       });
 
-    const handleUserJoined = async ({ userId }) => {
+    const handleUserJoined = async ({ userId, userName, profilePicture }) => {
       if (!isLocalStreamReady) return;
 
       console.log("User joined: " + userId);
@@ -50,10 +53,10 @@ const useWebRTC = (socket, meetingId) => {
           const existingPeer = prevPeers.find(peer => peer.id === userId);
           if (existingPeer) {
             return prevPeers.map(peer =>
-              peer.id === userId ? { ...peer, stream: event.streams[0] } : peer
+              peer.id === userId ? { ...peer, stream: event.streams[0],userName, profilePicture ,videoEnabled,audioEnabled } : peer
             );
           }
-          return [...prevPeers, { id: userId, stream: event.streams[0] }];
+          return [...prevPeers, { id: userId, stream: event.streams[0],userName, profilePicture ,videoEnabled,audioEnabled }];
         });
       };
 
@@ -66,7 +69,7 @@ const useWebRTC = (socket, meetingId) => {
       socket.emit('signal', { meetingId, to: userId, signal: offer });
     };
 
-    const handleSignal = async ({ from, signal }) => {
+    const handleSignal = async ({ from, signal, userName, profilePicture }) => {
       if (!isLocalStreamReady) return; 
 
       console.log(`Received signal from user ${from}`, signal);
@@ -97,10 +100,10 @@ const useWebRTC = (socket, meetingId) => {
             const existingPeer = prevPeers.find(peer => peer.id === from);
             if (existingPeer) {
               return prevPeers.map(peer =>
-                peer.id === from ? { ...peer, stream: event.streams[0] } : peer
+                peer.id === from ? { ...peer, stream: event.streams[0] , userName, profilePicture,videoEnabled,audioEnabled} : peer
               );
             }
-            return [...prevPeers, { id: from, stream: event.streams[0] }];
+            return [...prevPeers, { id: from, stream: event.streams[0] , userName, profilePicture,videoEnabled,audioEnabled}];
           });
         };
 
@@ -144,6 +147,16 @@ const useWebRTC = (socket, meetingId) => {
     socket.on('user-joined', handleUserJoined);
     socket.on('signal', handleSignal);
     socket.on('user-left', handleUserLeft);
+    socket.on('videoToggled', ({ userId, enabled }) => {
+                  setPeers(prevPeers => prevPeers.map(peer =>
+                  peer.id === userId ? { ...peer, videoEnabled: enabled } : peer
+                ));
+              });
+    socket.on('audioToggled', ({ userId, enabled }) => {
+                  setPeers(prevPeers => prevPeers.map(peer =>
+                  peer.id === userId ? { ...peer, audioEnabled: enabled } : peer
+                ));
+              });
 
     return () => {
       Object.values(peerConnections.current).forEach(pc => pc.close());
@@ -151,10 +164,35 @@ const useWebRTC = (socket, meetingId) => {
       socket.off('user-joined', handleUserJoined);
       socket.off('signal', handleSignal);
       socket.off('user-left', handleUserLeft);
+      socket.off('videoToggled');
+      socket.off('audioToggled');
     };
   }, [socket, meetingId, isLocalStreamReady]);
 
-  return { localStream, peers };
+
+  const toggleVideo = () => {
+    if (localStream) {
+      localStream.getVideoTracks().forEach(track => track.enabled = !track.enabled);
+      setVideoEnabled(prev => {
+      const newEnabled = !prev;
+      socket.emit('toggleVideo', { meetingId, enabled: newEnabled });
+      return newEnabled;
+      });
+    }
+  };
+    
+    const toggleAudio = () => {
+      if (localStream) {
+        localStream.getAudioTracks().forEach(track => track.enabled = !track.enabled);
+        setAudioEnabled(prev => {
+        const newEnabled = !prev;
+        socket.emit('toggleAudio', { meetingId, enabled: newEnabled });
+        return newEnabled;
+        });
+      }
+    };
+
+  return { localStream, peers, videoEnabled, audioEnabled, toggleVideo, toggleAudio };
 };
 
 export default useWebRTC;
