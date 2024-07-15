@@ -1,3 +1,23 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.meeting-room {
+    @apply flex flex-col items-center justify-center h-screen bg-gray-800;
+}
+
+.video-container {
+    @apply flex justify-center items-center space-x-4;
+}
+
+.video-stream {
+    @apply w-1/2 h-auto rounded-lg shadow-lg;
+}
+
+.controls {
+    @apply mt-4 flex space-x-4;
+}
+
+.controls button {
+    @apply px-4 py-2 bg-blue-500 text-white rounded-lg shadow-lg;
+}
