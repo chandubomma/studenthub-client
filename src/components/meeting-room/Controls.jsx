@@ -1,44 +1,32 @@
-import React, { useState } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import React from 'react';
+import { FaMicrophone, FaMicrophoneSlash, FaVideo, FaVideoSlash, FaUsers, FaComments } from 'react-icons/fa';
 
-const Controls = ({ localStream, socket }) => {
-  const [isVideoOn, setIsVideoOn] = useState(true);
-  const [isAudioOn, setIsAudioOn] = useState(true);
-  const { id: meetingId } = useParams();
-  const navigate = useNavigate();
-
-  const toggleVideo = () => {
-    if (localStream) {
-      setIsVideoOn(prev => !prev);
-      localStream.getVideoTracks()[0].enabled = !isVideoOn;
-    }
-  };
-
-  const toggleAudio = () => {
-    if (localStream) {
-      setIsAudioOn(prev => !prev);
-      localStream.getAudioTracks()[0].enabled = !isAudioOn;
-    }
-  };
-
-  const leaveMeeting = () => {
-    socket.emit('leaveMeeting', { meetingId, userId: socket.id });
-    navigate('/');
-  };
-
+const Controls = ({ videoEnabled, audioEnabled, toggleVideo, toggleAudio }) => {
   return (
-    <div className="controls mt-4 flex space-x-4">
-      <button onClick={toggleVideo}>
-        {isVideoOn ? 'Turn Video Off' : 'Turn Video On'}
+    <div className="flex justify-center space-x-4  p-5 rounded-xl">
+      <button
+        onClick={toggleVideo}
+        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-4 px-4 rounded-full"
+      >
+        {videoEnabled ? <FaVideo className='text-xl' /> : <FaVideoSlash className='text-xl' />}
       </button>
-      <button onClick={toggleAudio}>
-        {isAudioOn ? 'Turn Audio Off' : 'Turn Audio On'}
+      <button
+        onClick={toggleAudio}
+        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-4 px-4 rounded-full"
+      >
+        {audioEnabled ? <FaMicrophone className='text-xl'/> : <FaMicrophoneSlash className='text-xl' />}
       </button>
-      <button onClick={() => { /* Add quality settings logic here */ }}>
-        Settings
+      <button
+        onClick={() => console.log('Show participants')}
+        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-4 px-4 rounded-full"
+      >
+        <FaUsers className='text-xl'/>
       </button>
-      <button onClick={leaveMeeting}>
-        Leave Meeting
+      <button
+        onClick={() => console.log('Show chat')}
+        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-4 px-4 rounded-full"
+      >
+        <FaComments className='text-xl'/>
       </button>
     </div>
   );
