@@ -9,10 +9,10 @@ const GuideCard = ({ guide }) => {
   const closeDialog = () => setIsDialogOpen(false);
 
   return (
-    <div className="mx-auto bg-white rounded-xl shadow-md">
+    <div className="mx-auto cursor-pointer bg-white rounded-xl shadow-md hover:shadow-xl hover:shadow-gray-400 ease-in-out duration-200">
       <div className="md:flex">
         <div className="min-w-44">
-          <img className="h-48 w-full object-cover md:h-full md:w-60" src="https://tse1.mm.bing.net/th?id=OIP.SgHZIP_tF1NmAX3dTdWSEgHaH_&pid=Api&P=0&h=180" alt="Guide Profile" />
+          <img className="h-48 w-full object-cover md:h-full md:w-60" src={guide.user.profile} alt="Guide Profile" />
         </div>
         <div className="p-5 w-[23rem]">
           <div className="uppercase tracking-wide text-sm text-indigo-500 font-semibold">{guide.user.username}</div>
