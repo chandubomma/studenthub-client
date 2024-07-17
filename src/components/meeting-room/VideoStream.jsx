@@ -3,7 +3,7 @@ import { FaMicrophone, FaMicrophoneSlash,FaVideoSlash } from 'react-icons/fa';
 
 const VideoStream = ({ stream, isLocal, videoEnabled, audioEnabled, userName }) => {
   return (
-    <div className="relative w-full h-full max-h-[37rem]">
+    <div className="relative w-full max-h-[37rem] rounded-xl">
       {
       videoEnabled?
       <div>
@@ -20,7 +20,7 @@ const VideoStream = ({ stream, isLocal, videoEnabled, audioEnabled, userName }) 
           {userName}
         </div>
       </div>:
-        <div className="bg-gray-800 flex flex-col items-center justify-center rounded-xl w-full h-full max-h-[37rem]">
+        <div className="bg-gray-800 flex flex-col items-center justify-center rounded-xl w-full h-[37rem] max-h-[37rem]">
           <span className='p-6 bg-gray-500 rounded-full mb-5'>
             <FaVideoSlash className='text-4xl ' />
           </span>
