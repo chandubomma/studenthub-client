@@ -5,20 +5,26 @@ export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    setLoading(true);
     const storedToken = localStorage.getItem('token');
     if (storedToken) {
       axios.get('http://localhost:3000/api/auth/user', {
         headers: { Authorization: `Bearer ${storedToken}` }
       })
       .then(response => {
-        console.log(response.data);
         setUser(response.data);
+        console.log(response.data);
+        setLoading(false); // Set loading to false after successful request
       })
       .catch(error => {
         console.error('Error fetching user:', error);
+        setLoading(false); // Set loading to false after failed request
       });
+    } else {
+      setLoading(false); // Set loading to false if no token is found
     }
   }, []);
 
@@ -33,7 +39,7 @@ export const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ user, login, logout }}>
+    <AuthContext.Provider value={{ user, login, logout, loading }}>
       {children}
     </AuthContext.Provider>
   );
