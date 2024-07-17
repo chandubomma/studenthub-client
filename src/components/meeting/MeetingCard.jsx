@@ -1,11 +1,11 @@
 import React from 'react';
-
+import { useNavigate } from 'react-router-dom';
 
 
 const MeetingCard = ({ meeting }) => {
-
+    const navigate = useNavigate();
     const handleJoinMeeting = () => {
-        window.location.href = `/meeting/${meeting.id}`;
+        navigate(`/meeting/${meeting.id}`);
     };
 
     const handleCancelMeeting = async () => {
@@ -24,26 +24,32 @@ const MeetingCard = ({ meeting }) => {
     const isToBeHappen = meeting.status === 'TO_BE_HAPPEN';
 
     return (
-        <div className="bg-white shadow-md rounded-lg p-6 mb-4">
-            <h2 className="text-xl font-semibold mb-2">Meeting with {meeting.host.username}</h2>
-            <p className="text-gray-600">Scheduled At: {new Date(meeting.scheduledAt).toLocaleString()}</p>
-            <p className="text-gray-600">Status: {meeting.status}</p>
+        <div className="bg-white shadow-md hover:shadow-lg duration-300 ease-in-out hover:shadow-gray-400 rounded-lg px-4 py-6 mb-4 max-w-[25rem]">
+            <h2 className="text-xl text-gray-600 font-semibold mb-2">Meeting with {meeting.host.username}</h2>
+            <p className="text-gray-500">Scheduled At : {new Date(meeting.scheduledAt).toLocaleString()}</p>
+            <p className="text-gray-500">Status : {meeting.status}</p>
             <div className="flex flex-col">
-                <h3 className="text-lg font-semibold mt-4">Participants</h3>
+                <h3 className="text-lg text-gray-600 font-semibold mt-4">Participants</h3>
                 {meeting.participants.map(participant => (
-                    <div key={participant.userId} className="flex items-center mt-2">
-                        <div className="mr-4">
-                            <p className="font-semibold">{participant.user.username}</p>
-                            <p className="text-gray-500">{participant.user.collegeName} ({participant.user.batchYear})</p>
+                    <div key={participant.userId} className="flex items-center mt-2 border-2 p-4 border-dashed pb-2">
+                        <div>
+                            <img
+                             src={participant.user.profile}
+                             className='rounded-full w-20 h-16'
+                            />
+                        </div>
+                        <div className="ml-4">
+                            <p className="font-semibold text-gray-600 text-lg">{participant.user.username}</p>
+                            <p className="text-gray-500 text-sm">{participant.user.collegeName} ({participant.user.batchYear})</p>
                         </div>
                     </div>
                 ))}
             </div>
-            <div className="mt-4">
+            <div className="mt-4 flex justify-between">
                 {isMeetingUpcoming && !isMeetingCancelled && (
                     <button
                         onClick={handleCancelMeeting}
-                        className="bg-red-500 text-white px-4 py-2 rounded mr-2"
+                        className="border-2 border-red-400 text-red-500 hover:bg-red-400 hover:text-white px-4 py-2  mr-2"
                     >
                         Cancel Meeting
                     </button>
@@ -51,8 +57,7 @@ const MeetingCard = ({ meeting }) => {
                 {!isMeetingCancelled && (
                     <button
                         onClick={handleJoinMeeting}
-                        className={`bg-blue-500 text-white px-4 py-2 rounded `}
-                        disabled={!isMeetingUpcoming}
+                        className={`border-2 border-blue-400 text-blue-500 hover:bg-blue-400 hover:text-white px-4 py-2`}
                     >
                        Join Meeting
                     </button>
