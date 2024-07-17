@@ -1,23 +1,26 @@
 import React, { useState, useContext } from 'react';
 import { AuthContext } from '../context/AuthContext';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const SignUp = () => {
   const { login } = useContext(AuthContext);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [username, setUsername] = useState('');
-  const [college, setCollege] = useState('');
-  const [batch, setBatch] = useState('');
+  const [collegeName, setCollege] = useState('');
+  const [batchYear, setBatch] = useState();
+  const navigate = useNavigate();
 
   const handleSignUp = async (e) => {
     e.preventDefault();
     try {
       const response = await axios.post('http://localhost:3000/api/auth/signup', {
-        email, password, username, college, batch
+        email, password, username, collegeName, batchYear
       });
       const { token, user } = response.data;
       login(token, user);
+      navigate('/');
     } catch (error) {
       console.error('Error signing up:', error);
     }
@@ -62,7 +65,7 @@ const SignUp = () => {
             <label className="block text-gray-700">College</label>
             <input
               type="text"
-              value={college}
+              value={collegeName}
               onChange={(e) => setCollege(e.target.value)}
               className="w-full px-3 py-2 border rounded"
               required
@@ -71,8 +74,8 @@ const SignUp = () => {
           <div className="mb-4">
             <label className="block text-gray-700">Batch</label>
             <input
-              type="text"
-              value={batch}
+              type="number"
+              value={batchYear}
               onChange={(e) => setBatch(e.target.value)}
               className="w-full px-3 py-2 border rounded"
               required

@@ -25,13 +25,13 @@ import { matchPath } from "react-router-dom";
 
 const Root = () => {
   const location = useLocation();
-  const pathsWithoutNavbar = ["/signin", "/signup", "/meeting/:id"];
+  const pathsWithNavbar = ["/"];
 
-  const hideNavbar = pathsWithoutNavbar.some(path => matchPath(path, location.pathname));
+  const showNavbar = pathsWithNavbar.some(path => matchPath(path, location.pathname));
 
   return (
     <React.Fragment>
-      {!hideNavbar && <Navbar />}
+      {showNavbar && <Navbar />}
       <Outlet />
       <Toaster position="bottom-center" richColors />
     </React.Fragment>

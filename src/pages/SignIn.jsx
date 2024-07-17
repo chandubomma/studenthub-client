@@ -1,11 +1,13 @@
 import React, { useState, useContext } from 'react';
 import { AuthContext } from '../context/AuthContext';
 import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 const SignIn = () => {
   const { login } = useContext(AuthContext);
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const navigate = useNavigate();
 
   const handleSignIn = async (e) => {
     e.preventDefault();
@@ -13,6 +15,7 @@ const SignIn = () => {
       const response = await axios.post('http://localhost:3000/api/auth/signin', { email, password });
       const { token, user } = response.data;
       login(token, user);
+      navigate(-1);
     } catch (error) {
       console.error('Error signing in:', error);
     }

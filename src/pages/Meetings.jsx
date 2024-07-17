@@ -20,8 +20,8 @@ const Meetings = () => {
   }, []);
 
   return (
-    <div className="container mx-auto p-4">
-      <h2 className="text-2xl font-bold mb-4">Meetings</h2>
+    <div className="container mx-auto p-10">
+      <h2 className="text-xl font-medium mb-4 text-gray-700">Your Meetings</h2>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
         {meetings.map(meeting => (
           <MeetingCard key={meeting.id} meeting={meeting} />
