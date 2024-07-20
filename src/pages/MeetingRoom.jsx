@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { SocketContext } from '../context/SocketContext';
 import useWebRTC from '../hooks/useWebRTC';
@@ -6,14 +6,42 @@ import Controls from '../components/meeting-room/Controls';
 import VideoStream from '../components/meeting-room/VideoStream';
 import SideDrawer from '../components/meeting-room/SideDrawer';
 import { useNavigate } from 'react-router-dom';
+import { AuthContext } from '../context/AuthContext';
+import axios from '../api/axios';
 
 const MeetingRoom = () => {
   const navigate = useNavigate();
   const { id } = useParams();
   const socket = useContext(SocketContext);
+  const { user} = useContext(AuthContext);
   const [isDrawerOpen, setDrawerOpen] = useState(false);
-  const { localStream, peers, videoEnabled, audioEnabled, toggleVideo, toggleAudio, leaveMeeting } = useWebRTC(socket, id);
-  console.log(peers)
+  const [meeting,setMeeting] = useState(null);
+  const { localStream, remoteStream,peer, videoEnabled, audioEnabled, toggleVideo, toggleAudio, leaveMeeting ,isPeerConnected,setPeer} = useWebRTC(socket, id);
+
+  useEffect(()=>{
+    const getMeetingById = async (Id) => {
+      try {
+          const response = await axios.get(`/user/meeting/${Id}`);
+          console.log(response.data);
+          setMeeting(response.data);
+      } catch (error) {
+          console.error('Error fetching meeting details:', error);
+          throw error;
+      }
+    };
+    getMeetingById(id)
+  },[])
+
+  useEffect(()=>{
+    if(meeting){
+      meeting.participants.forEach(p=>{
+        if( p.user.id!=user.id){
+          setPeer(peer=>({...peer,username:p.user.username,profile:p.user.profile}))
+        }
+      })
+    }
+  },[meeting])
+
   const handleDrawerToggle = () => {
     setDrawerOpen(!isDrawerOpen);
   };
@@ -22,32 +50,29 @@ const MeetingRoom = () => {
     leaveMeeting();
     navigate(-1);
     window.history.pushState({}, document.title, window.location.pathname);
-    window.location.href = '/guide/meetings';
+    window.location.href = '/user/meetings';
   };
 
   return (
     <div className="h-screen w-screen flex relative bg-black">
       <div className={`${isDrawerOpen ? 'w-1/3' : 'w-1/2'} h-full p-8`}>
-          <VideoStream
+      <VideoStream
             stream={localStream}
             isLocal
             videoEnabled={videoEnabled}
             audioEnabled={audioEnabled}
             userName="You"
-            profile=""
+            profile = {user.profile}
           />
       </div>
       <div className={`${isDrawerOpen ? 'w-1/3' : 'w-1/2'} h-full p-8`}>
-        {peers.map((peer) => (
-          <VideoStream
-            key={peer.id}
-            stream={peer.stream}
+      <VideoStream
+            stream={remoteStream}
             videoEnabled={peer.videoEnabled}
             audioEnabled={peer.audioEnabled}
-            userName={peer.userName}
-            profile={peer.profilePicture}
+            userName={isPeerConnected?peer.username:`waiting for ${peer.username} to join ...`}
+            profile = {peer.profile}
           />
-        ))}
       </div>
       <div className="absolute bottom-10 w-full flex justify-center">
         <Controls
