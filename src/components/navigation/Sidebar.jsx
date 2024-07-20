@@ -61,18 +61,18 @@ const Sidebar = () => {
             <div className="ml-8 transition duration-300 transform">
               <MenuLink
                 isMenuOpen={isLinkActive("/guide/list")}
-                to="list"
+                to="/guide/list"
                 icon={<RiTeamLine size={20} />}
                 text="Guide List"
               />
-              <MenuLink
-                to="favorites"
+              {/* <MenuLink
+                to="/guide/favorites"
                 isMenuOpen={isLinkActive("/guide/favorites")}
                 icon={<BsFillStarFill size={20} />}
                 text="Favorites"
-              />
+              /> */}
               <MenuLink
-                to="requests"
+                to="/guide/requests"
                 isMenuOpen={isLinkActive("/guide/requests")}
                 icon={<MdRequestPage size={20} />}
                 text="Requests"
@@ -81,7 +81,7 @@ const Sidebar = () => {
           </>
         )}
 
-        <Link to="meetings">
+        <Link to="/user/meetings">
           <div
             className={`${
               isLinkActive("/guide/meetings")
@@ -96,10 +96,10 @@ const Sidebar = () => {
       </div>
 
       <div className="border-r left-0 w-[17.5rem] h-[16vh] p-3 lg:flex flex-col gap-y-2">
-        <Link to="profile">
+        <Link to="/user/account">
           <div
             className={`${
-              isLinkActive("/account")
+              isLinkActive("/user/account")
                 ? "text-blue-500 bg-blue-50"
                 : "text-gray-500"
             } hover:bg-gray-100 w-full px-4 transition-colors duration-300 hover:opacity-80 flex items-center gap-x-4 py-[10px] rounded-md cursor-pointer`}

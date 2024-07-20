@@ -45,12 +45,14 @@ const AppRoutes = () => (
       <Route path="guide" element={<Guide />}>
         <Route path="list" element={<GuidesList />} />
         <Route path="requests" element={<ProtectedRoute><MeetingRequests /></ProtectedRoute>} />
+      </Route>
+      <Route path="user"  element={<Guide/>}>
+        <Route path="account" element={<ProtectedRoute><Account /></ProtectedRoute>} />
         <Route path="meetings" element={<ProtectedRoute><Meetings /></ProtectedRoute>} />
       </Route>
-      <Route path="meeting/:id" element={<MeetingRoom />} />
+      <Route path="meeting/:id" element={<ProtectedRoute><MeetingRoom /></ProtectedRoute>} />
       <Route path="signin" element={<SignIn />} />
       <Route path="signup" element={<SignUp />} />
-      <Route path="account" element={<ProtectedRoute><Account /></ProtectedRoute>} />
       <Route path="about" element={<About />} />
     </Route>
   </Routes>
