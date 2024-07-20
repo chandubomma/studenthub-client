@@ -18,12 +18,6 @@ const Controls = ({ videoEnabled, audioEnabled, toggleVideo, toggleAudio ,handle
         {audioEnabled ? <FaMicrophone className='text-xl'/> : <FaMicrophoneSlash className='text-xl' />}
       </button>
       <button
-        onClick={() => console.log('Show participants')}
-        className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-4 px-4 rounded-full"
-      >
-        <FaUsers className='text-xl'/>
-      </button>
-      <button
         onClick={() => handleDrawerToggle()}
         className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-4 px-4 rounded-full"
       >
