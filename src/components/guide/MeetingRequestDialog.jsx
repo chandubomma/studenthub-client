@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import axios from '../../api/axios';
 
-const MeetingRequestDialog = ({ guide, onClose }) => {
+const MeetingRequestDialog = ({ guide, onClose , setRequestSent}) => {
   const [preferredDateTime, setPreferredDateTime] = useState('');
 
   const handleSendRequest = async () => {
@@ -10,6 +10,7 @@ const MeetingRequestDialog = ({ guide, onClose }) => {
         guideId: guide.id,
         preferredTime : preferredDateTime
       });
+      setRequestSent(true);
       onClose();
     } catch (error) {
       console.error('Error sending meeting request:', error);
