@@ -20,7 +20,7 @@ const Account = () => {
   console.log(user);
 
   return (
-    <div>
+    <div >
       <Profile user={user} />
       <div className='flex justify-center mt-4 w-full'>
         <div className='flex flex-col w-ful'>
@@ -210,23 +210,38 @@ const PasswordDialog = ({ onClose }) => {
 
   return (
     <div className='fixed inset-0 bg-gray-500 bg-opacity-75 flex items-center justify-center'>
-      <div className='bg-white rounded-lg shadow-lg p-6'>
-        <h2 className='text-2xl font-bold mb-4'>Change Password</h2>
-        <input
-          type='password'
-          placeholder='New Password'
-          value={newPassword}
-          onChange={(e) => setNewPassword(e.target.value)}
-          className='border p-2 w-full mb-4'
-        />
-        <input
-          type='password'
-          placeholder='Confirm New Password'
-          value={confirmPassword}
-          onChange={(e) => setConfirmPassword(e.target.value)}
-          className='border p-2 w-full mb-4'
-        />
-        <div className='flex justify-end'>
+      <div className='bg-white rounded-lg shadow-lg p-8 w-96'>
+        <h2 className='text-2xl font-bold mb-4 text-gray-700'>Change Password</h2>
+        <div className="form-floating mt-2">
+          <input
+            className="form-control focus:shadow-none focus:border-blue-600 rounded-md"
+            id="password"
+            placeholder="Enter New Password"
+            name="password"
+            type="password"
+            value={newPassword}
+            onChange={(e)=>setNewPassword(e.target.value)}
+            autoFocus
+          />
+          <label htmlFor="password" className="text-gray-500">
+            New Password
+          </label>
+        </div>
+        <div className="form-floating mt-3">
+          <input
+            className="form-control focus:shadow-none focus:border-blue-600 rounded-md"
+            id="confirmpassword"
+            placeholder="Confirm New Password"
+            type="password"
+            value={confirmPassword}
+            onChange={(e)=>setConfirmPassword(e.target.value)}
+            autoFocus
+          />
+          <label htmlFor="confirmpassword" className="text-gray-500">
+            Confirm New Password
+          </label>
+        </div>
+        <div className='flex justify-end mt-4'>
           <button
             onClick={onClose}
             className='px-4 py-2 bg-gray-300 rounded-lg mr-2'
@@ -265,16 +280,23 @@ const GithubDialog = ({ onClose,setUser }) => {
 
   return (
     <div className='fixed inset-0 bg-gray-500 bg-opacity-75 flex items-center justify-center'>
-      <div className='bg-white rounded-lg shadow-lg p-6'>
-        <h2 className='text-2xl font-bold mb-4'>Add Your Github Profile</h2>
-        <input
-          type='text'
-          placeholder='Github Profile'
-          value={link}
-          onChange={(e) => setLink(e.target.value)}
-          className='border p-2 w-full mb-4'
-        />
-        <div className='flex justify-end'>
+      <div className='bg-white rounded-lg shadow-lg p-8 w-96'>
+        <h2 className='text-2xl font-bold mb-4 text-gray-700'>Add Your Github Profile</h2>
+        <div className="form-floating mt-3">
+          <input
+            className="form-control focus:shadow-none focus:border-blue-600 rounded-md"
+            id="github"
+            placeholder="Github Profile"
+            type="text"
+            value={link}
+            onChange={(e)=>setLink(e.target.value)}
+            autoFocus
+          />
+          <label htmlFor="github" className="text-gray-500">
+            Github Profile
+          </label>
+        </div>
+        <div className='flex justify-end mt-3'>
           <button
             onClick={onClose}
             className='px-4 py-2 bg-gray-300 rounded-lg mr-2'
@@ -301,7 +323,7 @@ const LinkedInDialog = ({ onClose,setUser }) => {
       const response = await axios.post('/user/update-linkedin', { linkedin:link });
       if (response.status === 200) {
         toast.success('LinkedIn profile updated successfully');
-        setLink(user=>({...user,linkedin:link}));
+        setUser(user=>({...user,linkedin:link}));
         onClose();
       } else {
         toast.error('Error updating LinkedIn profile');
@@ -313,16 +335,23 @@ const LinkedInDialog = ({ onClose,setUser }) => {
 
   return (
     <div className='fixed inset-0 bg-gray-500 bg-opacity-75 flex items-center justify-center'>
-      <div className='bg-white rounded-lg shadow-lg p-6'>
-        <h2 className='text-2xl font-bold mb-4'>Add Your LinkedIn Profile</h2>
-        <input
-          type='text'
-          placeholder='LinkedIn Profile'
-          value={link}
-          onChange={(e) => setLink(e.target.value)}
-          className='border p-2 w-full mb-4'
-        />
-        <div className='flex justify-end'>
+      <div className='bg-white rounded-lg shadow-lg p-8 w-96'>
+        <h2 className='text-2xl font-bold mb-4 text-gray-800'>Add Your LinkedIn Profile</h2>
+        <div className="form-floating mt-3">
+          <input
+            className="form-control focus:shadow-none focus:border-blue-600 rounded-md"
+            id="linkedin"
+            placeholder="Linkedin Profile"
+            type="text"
+            value={link}
+            onChange={(e)=>setLink(e.target.value)}
+            autoFocus
+          />
+          <label htmlFor="github" className="text-gray-500">
+            LinkedIn Profile
+          </label>
+        </div>
+        <div className='flex justify-end mt-3'>
           <button
             onClick={onClose}
             className='px-4 py-2 bg-gray-300 rounded-lg mr-2'
@@ -361,16 +390,24 @@ const UsernameDialog = ({ onClose ,setUser}) => {
 
   return (
     <div className='fixed inset-0 bg-gray-500 bg-opacity-75 flex items-center justify-center'>
-      <div className='bg-white rounded-lg shadow-lg p-6'>
-        <h2 className='text-2xl font-bold mb-4'>Change Username</h2>
-        <input
-          type='text'
-          placeholder='username'
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-          className='border p-2 w-full mb-4'
-        />
-        <div className='flex justify-end'>
+      <div className='bg-white rounded-lg shadow-lg p-8 w-96'>
+        <h2 className='text-2xl font-bold mb-4 text-gray-700'>Change Username</h2>
+        <div className="form-floating mt-3">
+          <input
+            className="form-control focus:shadow-none focus:border-blue-600 rounded-md"
+            id="username"
+            placeholder="username"
+            type="text"
+            value={username}
+            onChange={(e)=>setUsername(e.target.value)}
+            autoFocus
+          />
+          <label htmlFor="username" className="text-gray-500">
+            username
+          </label>
+        </div>
+       
+        <div className='flex justify-end mt-3'>
           <button
             onClick={onClose}
             className='px-4 py-2 bg-gray-300 rounded-lg mr-2'
@@ -410,16 +447,23 @@ const AboutDialog = ({ onClose ,setUser}) => {
 
   return (
     <div className='fixed inset-0 bg-gray-500 bg-opacity-75 flex items-center justify-center'>
-      <div className='bg-white rounded-lg shadow-lg p-6'>
-        <h2 className='text-2xl font-bold mb-4'>Change About </h2>
-        <input
-          type='text'
-          placeholder='About'
-          value={about}
-          onChange={(e) => setAbout(e.target.value)}
-          className='border p-2 w-full mb-4'
-        />
-        <div className='flex justify-end'>
+      <div className='bg-white rounded-lg shadow-lg p-8 w-96'>
+        <h2 className='text-2xl font-bold mb-4 text-gray-700'>Change About </h2>
+        <div className="form-floating mt-3">
+          <input
+            className="form-control focus:shadow-none focus:border-blue-600 rounded-md"
+            id="about"
+            placeholder="About"
+            type="text"
+            value={about}
+            onChange={(e)=>setAbout(e.target.value)}
+            autoFocus
+          />
+          <label htmlFor="github" className="text-gray-500">
+            About
+          </label>
+        </div>
+        <div className='flex justify-end mt-3'>
           <button
             onClick={onClose}
             className='px-4 py-2 bg-gray-300 rounded-lg mr-2'
