@@ -24,7 +24,7 @@ const GuideCard = ({ guide }) => {
     <div className="mx-auto cursor-pointer h-fit bg-white rounded-xl shadow-md hover:shadow-xl hover:shadow-gray-400 ease-in-out duration-200 w-fit max-w-[33rem]">
       <div className="md:flex">
         <div className="min-w-44">
-          <img className="w-60 h-full object-cover" src={guide.profile} alt="Guide Profile" />
+          <img className="md:w-60 w-full md:h-full h-60 object-cover" src={guide.profile} alt="Guide Profile" />
         </div>
         <div className="p-3 pt-4 w-[22rem]">
           <Link to={`/user/${guide.id}`} className="uppercase tracking-wide text-sm text-indigo-500 font-semibold hover:underline">{guide.username}</Link>

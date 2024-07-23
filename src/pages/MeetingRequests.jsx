@@ -25,7 +25,7 @@ const MeetingRequests = () => {
   }, []);
 
   return (
-    <div className="container mx-auto p-8">
+    <div className="container mx-auto p-8 w-screen overflow-auto">
       <h2 className="text-xl text-gray-700 font-semibold mb-5">Meeting Requests {user.isGuide?'Received':'Sent'}</h2>
       <table className="min-w-full bg-white">
         <thead>

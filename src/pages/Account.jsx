@@ -31,11 +31,11 @@ const Account = () => {
           <h3 className='w-fit mx-auto text-xl font-medium text-gray-500'>{user.email}</h3>
         </div>
       </div>
-      <div className='w-2/3 mx-auto mt-20'>
-        <h3 className='text-gray-600 text-lg font-bold'>Social Profile</h3>
+      <div className='md:w-2/3 mx-auto mt-20'>
+        <h3 className='text-gray-600 text-lg font-bold ml-1'>Social Profile</h3>
       </div>
-      <div className='w-2/3 mx-auto h-fit border-2 border-blue-200 mt-4 rounded-xl shadow-lg shadow-gray-200'>
-        <div className='flex justify-between border-gray-500 m-10'>
+      <div className='md:w-2/3 mx-auto h-fit border-2 border-blue-200 mt-4 rounded-xl md:shadow-lg shadow-gray-200'>
+        <div className='flex flex-col md:flex-row justify-between border-gray-500 m-10'>
           <h1 className='text-lg font-medium text-gray-700'>About</h1>
           <div className='flex w-fit'>
             <h3 className='text-lg font-medium text-gray-500'>{user.about?user.about:'Student at '+user.collegeName}</h3>
@@ -48,14 +48,14 @@ const Account = () => {
         <LinkedinProfile user={user} setShowLinkedInDialog = {setShowLinkedInDialog}/>
        
       </div>
-      <div className='w-2/3 mx-auto mt-20'>
-        <h3 className='text-gray-600 text-lg font-bold'>Settings</h3>
+      <div className='md:w-2/3 mx-auto mt-20'>
+        <h3 className='text-gray-600 text-lg font-bold ml-1'>Settings</h3>
       </div>
-      <div className='w-2/3 mx-auto h-fit border-2 border-blue-200 mt-4 rounded-xl shadow-lg shadow-gray-200'>
+      <div className='md:w-2/3 mx-auto h-fit border-2 border-blue-200 mt-4 rounded-xl md:shadow-lg shadow-gray-200'>
         <div className='flex justify-between border-gray-500 m-10'>
           <h1 className='text-lg font-medium text-gray-700'>Reset Your Password</h1>
           <button
-            className='px-4 py-2 h-12 border-2 border-blue-200 rounded-lg bg-opacity-50 bg-gray-200 text-lg text-blue-600 font-medium'
+            className='px-4 py-2 h-fit border-2 border-blue-200 rounded-lg bg-opacity-50 bg-gray-200 text-lg text-blue-600 font-medium'
             onClick={() => setShowPasswordDialog(true)}
           >
             Change Password
@@ -70,7 +70,7 @@ const Account = () => {
             <h3 className='text-gray-500 text-sm'>None - visible to only you.</h3>
           </div>
           <button
-            className='px-4 py-2 h-12 border-2 border-blue-200 rounded-lg bg-opacity-50 bg-gray-200 text-lg text-blue-600 font-medium'
+            className='px-4 py-2 h-fit border-2 border-blue-200 rounded-lg bg-opacity-50 bg-gray-200 text-lg text-blue-600 font-medium'
             onClick={() => setShowVisibilityDialog(true)}
           >
             Change Visibility
@@ -91,7 +91,7 @@ const Account = () => {
               <h2 className='text-lg font-medium text-blue-600'>You are Guide</h2>
             </div>:
             <button
-              className='px-4 py-2 h-12 border-2 border-blue-200 rounded-lg bg-opacity-50 bg-gray-200 text-lg text-blue-600 font-medium'
+              className='px-4 py-2 h-fitborder-2 border-blue-200 rounded-lg bg-opacity-50 bg-gray-200 text-lg text-blue-600 font-medium'
               onClick={() => setShowGuideDialog(true)}
             >
               Become Guide
@@ -108,7 +108,7 @@ const Account = () => {
             </h3>
           </div>
           <button
-            className='px-4 py-2 h-12 border-2 border-blue-200 rounded-lg bg-opacity-50 bg-gray-200 text-lg text-blue-600 font-medium'
+            className='px-4 py-2 h-fit border-2 border-blue-200 rounded-lg bg-opacity-50 bg-gray-200 text-lg text-blue-600 font-medium'
             onClick={() => setShowDeleteDialog(true)}
           >
             Delete Account
@@ -637,7 +637,7 @@ const GithubProfile = ({ user,setShowGithubDialog }) => {
   const githubUrl = user.github ? user.github : 'https://github.com/';
 
   return (
-    <div className='flex justify-between border-gray-500 m-10'>
+    <div className='flex flex-col md:flex-row  justify-between border-gray-500 m-10'>
       <h1 className='text-lg font-medium text-gray-700'>Github</h1>
       <div className='flex w-fit'>
         
@@ -667,7 +667,7 @@ const LinkedinProfile = ({ user,setShowLinkedInDialog }) => {
   const linkedinUrl = user.linkedin ? user.linkedin : 'https://www.linkedin.com/';
 
   return (
-    <div className='flex justify-between border-gray-500 m-10'>
+    <div className='flex flex-col md:flex-row justify-between border-gray-500 m-10'>
       <h1 className='text-lg font-medium text-gray-700'>LinkedIn</h1>
       <div className='flex w-fit'>
         <FaLinkedin className='text-2xl mt-1 text-blue-500'/>

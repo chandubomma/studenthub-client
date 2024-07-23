@@ -245,7 +245,7 @@ const Navbar = () => {
                 Home
               </Link>
               <Link
-                to="/"
+                to="/guide/list"
                 className={`${
                   isLinkActive("/guide/list")
                     ? "text-black font-bold"

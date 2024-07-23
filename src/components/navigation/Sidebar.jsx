@@ -24,7 +24,8 @@ const Sidebar = () => {
  
   return (
     <>
-      <div className="border-r left-0 w-[17.5rem] h-[84vh] overflow-y-auto p-3 lg:flex flex-col gap-y-2">
+      <div className="md:border-r left-0 md:w-[17.5rem] md:h-[84vh] overflow-y-auto p-3 lg:flex flex-col gap-y-2">
+        <h2 className="text-xl font-bold my-2"><span className="text-blue-700">SH</span><span className="text-gray-700">ub</span></h2>
         <Link to="/">
           <div
             className={`text-gray-500 hover:bg-gray-100 w-full px-4 transition-colors duration-300 hover:opacity-80 flex items-center gap-x-4 py-[10px] rounded-md cursor-pointer`}
@@ -95,7 +96,7 @@ const Sidebar = () => {
         </Link>
       </div>
 
-      <div className="border-r left-0 w-[17.5rem] h-[16vh] p-3 lg:flex flex-col gap-y-2">
+      <div className="md:border-r left-0 md:w-[17.5rem] md:h-[16vh] p-3 lg:flex flex-col gap-y-2">
         <Link to="/user/account">
           <div
             className={`${

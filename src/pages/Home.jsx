@@ -12,12 +12,12 @@ const Home = () => {
       <Welcome/>
       <Working/>
       <TopRatedGuides/>
-      <div className='flex px-10'>
+      <div className='flex flex-col md:flex-row px-10'>
         <TopGuidesOfMonth/>
-        <div className='w-1/3 mx-auto '>
+        <div className='md:w-1/3 mx-auto '>
             <Player
             src="https://lottie.host/bea254e7-1b59-4e36-a49c-4a9e556d7bb4/BvYDngouXL.json"
-            className="player  w-[35rem] mt-5"
+            className="player  md:w-[35rem] mt-5"
             autoplay={true}
             loop
           />

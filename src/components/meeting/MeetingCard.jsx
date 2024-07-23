@@ -58,7 +58,7 @@ const MeetingCard = ({ meeting }) => {
                         {isMeetingUpcoming && !isMeetingCancelled && (
                             <button
                                 onClick={handleCancelMeeting}
-                                className="border-2 border-red-400 text-red-500 hover:bg-red-400 hover:text-white px-4 py-2  mr-2"
+                                className="border-2 border-red-400 text-red-500 hover:bg-red-400 hover:text-white px-4 py-2 mr-2 mt-2"
                             >
                                 Cancel Meeting
                             </button>
@@ -66,7 +66,7 @@ const MeetingCard = ({ meeting }) => {
                         {!isMeetingCancelled && (
                             <button
                                 onClick={handleJoinMeeting}
-                                className={`border-2 border-blue-400 text-blue-500 hover:bg-blue-400 hover:text-white px-4 py-2`}
+                                className={`border-2 border-blue-400 text-blue-500 hover:bg-blue-400 hover:text-white px-4 py-2 mt-2`}
                             >
                             Join Meeting
                             </button>

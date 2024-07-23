@@ -9,11 +9,11 @@ const Guide = () => {
 
   return (  
       <div className="m-0 ">
-        <div className="flex flex-row">
-            <div className="lg:flex-[2]">
+        <div className="flex md:flex-row flex-col">
+            <div className="md:lg:flex-[2] w-full">
               <Sidebar/>
             </div>
-            <div className="flex-[11]">
+            <div className="md:flex-[11]">
               <Outlet />
             </div>
         </div>

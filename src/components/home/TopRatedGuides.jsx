@@ -31,7 +31,7 @@ const TopRatedGuides = () => {
   return (
     <div className='mt-24 px-16 mb-32 '>
       <h2 className='text-xl font-medium text-gray-800'>Top Rated Guides</h2>
-      <div className='grid grid-cols-4 gap-x-20 gap-y-5 mt-10'>
+      <div className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-x-20 gap-y-5 mt-10'>
         {
             topRatedGuides.map((guide,index)=>(
             <TopRatedGuideCard key={index} guide={guide}/> 
