@@ -31,7 +31,7 @@ const MeetingCard = ({ meeting }) => {
 
     return (
         <div className="bg-white shadow-md hover:shadow-lg duration-300 ease-in-out hover:shadow-gray-400 rounded-lg px-4 py-6 mb-4 max-w-[25rem]">
-            <h2 className="text-xl text-gray-600 font-semibold mb-2">Meeting with {meeting.participants.filter(p=>{return p.id!=user.id})[0].user.username}</h2>
+            <h2 className="text-xl text-gray-600 font-semibold mb-2">Meeting with {meeting.participants.filter(p=>{return p.user.id!==user.id})[0].user.username}</h2>
             <p className="text-gray-500">Scheduled At : {new Date(meeting.scheduledAt).toLocaleString()}</p>
             <p className="text-gray-500">Status : {meeting.status}</p>
             <div className="flex flex-col">

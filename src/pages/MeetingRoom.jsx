@@ -36,7 +36,7 @@ const MeetingRoom = () => {
     if(meeting){
       meeting.participants.forEach(p=>{
         if( p.user.id!=user.id){
-          setPeer(peer=>({...peer,username:p.user.username,profile:p.user.profile}))
+          setPeer(peer=>({...peer,username:p.user.username,profile:p.user.profile,userId:p.user.id}))
         }
       })
     }
