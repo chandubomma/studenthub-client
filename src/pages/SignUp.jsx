@@ -1,93 +1,140 @@
-import React, { useState, useContext } from 'react';
-import { AuthContext } from '../context/AuthContext';
-import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import { useState } from "react";
+import UserSignUpStepIndicator from "../components/forms/UserSignUpStepIndicator";
+import UserDetailsForm from "../components/forms/UserDetailsForm";
+import OTPField from "../components/forms/OTPField";
+import EmailField from "../components/forms/EmailField";
+import {toast} from 'sonner';
+import axios from "../api/axios";
 
-const SignUp = () => {
-  const { login } = useContext(AuthContext);
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [username, setUsername] = useState('');
-  const [collegeName, setCollege] = useState('');
-  const [batchYear, setBatch] = useState();
-  const navigate = useNavigate();
 
-  const handleSignUp = async (e) => {
-    e.preventDefault();
-    try {
-      const response = await axios.post('http://localhost:3000/api/auth/signup', {
-        email, password, username, collegeName, batchYear
-      });
-      const { token, user } = response.data;
-      login(token, user);
-      navigate('/');
-    } catch (error) {
-      console.error('Error signing up:', error);
+const SignUpForm = () => {
+  const [currStep, setCurrStep] = useState(1);
+  const [user, setUser] = useState({
+    username : '',
+    email : '',
+    password : '',
+    tempToken : '',
+    collegeName : "",
+    batchYear : ''
+  });
+ 
+  const handleEmail = (e)=>{
+    setUser({
+      ...user,
+      email : e.target.value
+    })
+  }
+
+  const validateEmail = (enteredEmail) => {
+    if (!enteredEmail.trim()) {
+      toast.warning("Please enter your email address !");       // If email is empty or contains only spaces
+      return false;
     }
-  };
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const isValidFormat = emailRegex.test(enteredEmail);
+    if (!isValidFormat) {
+      toast.error("Invalid email address");     // If email format is invalid
+      return false;
+    }
+    return true;       // If email is valid
+  }
+
+  
+
+ 
+  async function handleSendOTP() {
+    const email = user.email;
+    if(!validateEmail(email))return;
+      //todo : need to check email in user base before sending otp;
+    const url = `/auth/send-verification-code`;
+    
+    try {
+      const response = await axios.post(url, {email})
+      if (response.status!=200) {
+        // Handle non-successful responses here
+        toast.error('Please try again later!')
+        return ;
+      }
+      toast.info('Please check you email for verification code.')
+      setCurrStep(2);
+    
+    } catch (error) {
+      // Handle network errors or other exceptions
+      toast.error('Please try again later!')
+      console.error('Error:', error);
+      return ;
+    }
+  }
+    
+
+  const handleVerifyOTP = async(verificationCode) => {
+    const url = `/auth/verify-code`;
+    const email = user.email;
+    try {
+      const response = await axios.post(url, {otp:verificationCode,email})
+  
+      if (response.status!=200) {
+        // Handle non-successful responses here
+        toast.error('Verification failed! Please try again.');
+        setCurrStep(1);
+        return null;
+      }
+      const {tempToken} = response.data;
+      setUser({
+        ...user,
+        tempToken 
+      })
+      toast.success('Email verification successfull!');
+      setCurrStep(3);
+      return data;
+    } catch (error) {
+      // Handle network errors or other exceptions
+      console.error('Error:', error.message);
+      return null;
+    }
+  }
+
+  if (currStep == 1)
+    return (
+      <div className="flex flex-col h-screen w-screen justify-center items-center">
+        <div className="flex justify-center">
+          <UserSignUpStepIndicator currStep={currStep} />
+        </div>
+
+        <div className="mt-16">
+          <h3 className="mb-8 w-80 text-xl text-gray-500 font-medium">
+            Verify Your Email
+          </h3>
+          {/* <MobileField handleSendOTP={handleSendOTP} handleMobileNumber={handleMobileNumber} mobileNumber={user.mobileNumber}/> */}
+          <EmailField handleSendOTP={handleSendOTP} handleEmail={handleEmail} email={user.email}/>
+        </div>
+      </div>
+    );
+  else if (currStep == 2)
+    return (
+      <div className="flex flex-col h-screen w-screen justify-center items-center">
+        <div className="flex justify-center">
+          <UserSignUpStepIndicator currStep={currStep} />
+        </div>
+
+        <div className="mt-16">
+          <OTPField handleVerifyOTP={handleVerifyOTP} />
+        </div>
+      </div>
+    );
 
   return (
-    <div className="flex justify-center items-center h-screen bg-gray-100">
-      <div className="bg-white p-8 rounded shadow-md w-full max-w-sm">
-        <h2 className="text-2xl font-bold mb-6">Sign Up</h2>
-        <form onSubmit={handleSignUp}>
-          <div className="mb-4">
-            <label className="block text-gray-700">Email</label>
-            <input
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="w-full px-3 py-2 border rounded"
-              required
-            />
-          </div>
-          <div className="mb-4">
-            <label className="block text-gray-700">Password</label>
-            <input
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="w-full px-3 py-2 border rounded"
-              required
-            />
-          </div>
-          <div className="mb-4">
-            <label className="block text-gray-700">Username</label>
-            <input
-              type="text"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              className="w-full px-3 py-2 border rounded"
-              required
-            />
-          </div>
-          <div className="mb-4">
-            <label className="block text-gray-700">College</label>
-            <input
-              type="text"
-              value={collegeName}
-              onChange={(e) => setCollege(e.target.value)}
-              className="w-full px-3 py-2 border rounded"
-              required
-            />
-          </div>
-          <div className="mb-4">
-            <label className="block text-gray-700">Batch</label>
-            <input
-              type="number"
-              value={batchYear}
-              onChange={(e) => setBatch(e.target.value)}
-              className="w-full px-3 py-2 border rounded"
-              required
-            />
-          </div>
-          <button type="submit" className="w-full bg-blue-500 text-white py-2 rounded hover:bg-blue-600">
-            Sign Up
-          </button>
-        </form>
+    <div className="flex flex-col h-screen w-screen justify-center items-center">
+      <div className="flex justify-center">
+        <UserSignUpStepIndicator currStep={currStep} />
+      </div>
+
+      <div className="mt-16">
+        <h3 className="mb-4 text-xl text-gray-500 font-medium">User Details</h3>
+        <UserDetailsForm user={user} setUser={setUser} />
       </div>
     </div>
   );
 };
 
-export default SignUp;
+export default SignUpForm;
