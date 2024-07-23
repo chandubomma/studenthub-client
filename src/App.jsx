@@ -22,17 +22,24 @@ import ProtectedRoute from './components/navigation/ProtectedRoute';
 import { AuthProvider } from './context/AuthContext';
 import SocketProvider from './context/SocketContext';
 import { matchPath } from "react-router-dom";
+import Footer from './components/navigation/Footer';
+import UserPage from './pages/UserPage';
 
 const Root = () => {
   const location = useLocation();
   const pathsWithNavbar = ["/"];
+  const pathsWithOutFooter = ["/signin","/signup","/meeting/:id"];
 
   const showNavbar = pathsWithNavbar.some(path => matchPath(path, location.pathname));
+  const showFooter = !pathsWithOutFooter.some(path => matchPath(path, location.pathname))
 
   return (
     <React.Fragment>
-      {showNavbar && <Navbar />}
+     <div className='flex-fex-col'>
+     {showNavbar && <Navbar />}
       <Outlet />
+     </div>
+      {showFooter && <Footer/>}
       <Toaster position="bottom-center" richColors />
     </React.Fragment>
   );
@@ -48,6 +55,7 @@ const AppRoutes = () => (
       </Route>
       <Route path="user"  element={<Guide/>}>
         <Route path="account" element={<ProtectedRoute><Account /></ProtectedRoute>} />
+        <Route path=":id" element={<UserPage/>} />
         <Route path="meetings" element={<ProtectedRoute><Meetings /></ProtectedRoute>} />
       </Route>
       <Route path="meeting/:id" element={<ProtectedRoute><MeetingRoom /></ProtectedRoute>} />
