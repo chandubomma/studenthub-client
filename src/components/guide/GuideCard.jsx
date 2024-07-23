@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { FaGithub, FaLinkedin } from 'react-icons/fa';
 import MeetingRequestDialog from './MeetingRequestDialog';
 import { TiTick } from "react-icons/ti";
@@ -6,13 +6,18 @@ import { BiSend } from "react-icons/bi";
 import { CiStar } from "react-icons/ci";
 import { FaStar } from "react-icons/fa6";
 import { Link } from 'react-router-dom';
-
+import { AuthContext } from '../../context/AuthContext';
+import { toast } from 'sonner';
 
 const GuideCard = ({ guide }) => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [requestSent,setRequestSent] = useState(false);
+  const {loading,user} = useContext(AuthContext)
 
-  const openDialog = () => setIsDialogOpen(true);
+  const openDialog = () => {
+    if(!loading && !user)toast.warning('signin into your account to continue..')
+    else setIsDialogOpen(true);
+  }
   const closeDialog = () => setIsDialogOpen(false);
 
   return (
