@@ -10,7 +10,7 @@ const SocketProvider = ({ children }) => {
 
   useEffect(() => {
     if (user) {
-      const newSocket = io('http://localhost:3000', {
+      const newSocket = io(import.meta.env.VITE_STUDENTHUB_API, {
         auth: { token: localStorage.getItem('token') },
       });
 
