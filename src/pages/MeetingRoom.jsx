@@ -56,8 +56,8 @@ const MeetingRoom = () => {
   return (
     <div className="min-h-screen w-screen flex relative bg-black">
      <div className={`flex-flex-col ${isDrawerOpen?' w-2/3':'w-full'}`}>
-     <div className='flex w-full'>
-      <div className={`w-1/2 h-full p-8`}>
+     <div className='flex w-full flex-col md:flex-row'>
+      <div className={`md:w-1/2 h-full p-8`}>
         <VideoStream
               stream={localStream}
               isLocal
@@ -67,7 +67,7 @@ const MeetingRoom = () => {
               profile = {user.profile}
             />
         </div>
-        <div className={`w-1/2 h-full p-8`}>
+        <div className={`md:w-1/2 h-full p-8`}>
         <VideoStream
               stream={remoteStream}
               videoEnabled={peer.videoEnabled}

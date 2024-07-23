@@ -3,19 +3,19 @@ import { FaMicrophone, FaMicrophoneSlash, FaVideoSlash } from 'react-icons/fa';
 
 const VideoStream = ({ stream, isLocal, videoEnabled, audioEnabled, userName,profile }) => {
   return (
-    <div className="relative w-full max-h-[37rem] rounded-xl">
+    <div className="relative w-full max-h-80 md:max-h-[37rem] rounded-xl">
       <div>
         {videoEnabled ? (
             <video
-              className="rounded-lg shadow-lg w-full h-full"
+              className="rounded-lg shadow-lg w-full h-full md:max-h-[37rem]"
               ref={(video) => { if (video) video.srcObject = stream; }}
               autoPlay
               muted={isLocal} // Mute the local video element
             />
         ) : (
-        <div className="bg-gray-800 flex flex-col items-center justify-center rounded-xl w-full h-[37rem] max-h-[37rem]">
+        <div className="bg-gray-800 flex flex-col items-center justify-center rounded-xl w-full h-80 md:h-[37rem] md:max-h-[37rem]">
           <img src={profile} className='w-40 h-40 rounded-full mb-5'/>
-          <span className="text-white text-3xl">{userName}</span>
+          <span className="text-white md:text-3xl">{userName}</span>
         </div>)
         }
         <div className="absolute bottom-5 right-4 bg-gray-900 text-white rounded-full p-2">

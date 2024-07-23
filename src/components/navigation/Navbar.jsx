@@ -166,7 +166,7 @@ const Navbar = () => {
           to="/"
           className="flex align-middle items-center gap-2 transition-transform transform hover:scale-110 hover:opacity-80"
         >
-          <h2 className="font-bold text-2xl">Shub</h2>
+          <h2 className="font-bold text-2xl"><span className="text-blue-700">SH</span>ub</h2>
         </Link>
 
         <div className="flex items-center justify-between gap-3">
