@@ -54,27 +54,30 @@ const MeetingRoom = () => {
   };
 
   return (
-    <div className="h-screen w-screen flex relative bg-black">
-      <div className={`${isDrawerOpen ? 'w-1/3' : 'w-1/2'} h-full p-8`}>
-      <VideoStream
-            stream={localStream}
-            isLocal
-            videoEnabled={videoEnabled}
-            audioEnabled={audioEnabled}
-            userName="You"
-            profile = {user.profile}
-          />
-      </div>
-      <div className={`${isDrawerOpen ? 'w-1/3' : 'w-1/2'} h-full p-8`}>
-      <VideoStream
-            stream={remoteStream}
-            videoEnabled={peer.videoEnabled}
-            audioEnabled={peer.audioEnabled}
-            userName={isPeerConnected?peer.username:`waiting for ${peer.username} to join ...`}
-            profile = {peer.profile}
-          />
-      </div>
-      <div className="absolute bottom-10 w-full flex justify-center">
+    <div className="min-h-screen w-screen flex relative bg-black">
+     <div className={`flex-flex-col ${isDrawerOpen?' w-2/3':'w-full'}`}>
+     <div className='flex w-full'>
+      <div className={`w-1/2 h-full p-8`}>
+        <VideoStream
+              stream={localStream}
+              isLocal
+              videoEnabled={videoEnabled}
+              audioEnabled={audioEnabled}
+              userName="You"
+              profile = {user.profile}
+            />
+        </div>
+        <div className={`w-1/2 h-full p-8`}>
+        <VideoStream
+              stream={remoteStream}
+              videoEnabled={peer.videoEnabled}
+              audioEnabled={peer.audioEnabled}
+              userName={isPeerConnected?peer.username:`waiting for ${peer.username?peer.username:'others'} to join ...`}
+              profile = {peer.profile}
+            />
+        </div>
+     </div>
+      <div className="w-full flex justify-center">
         <Controls
           videoEnabled={videoEnabled}
           audioEnabled={audioEnabled}
@@ -84,6 +87,7 @@ const MeetingRoom = () => {
           handleLeaveMeeting={handleLeaveMeeting}
         />
       </div>
+     </div>
       <SideDrawer isDrawerOpen={isDrawerOpen} handleDrawerToggle={handleDrawerToggle} />
     </div>
   );
