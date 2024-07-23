@@ -53,7 +53,7 @@ const MeetingCard = ({ meeting }) => {
             </div>
             <div className="mt-4 flex justify-between">
                 {
-                    isToBeHappen && !isAboveTime?
+                   
                     <div>
                         {isMeetingUpcoming && !isMeetingCancelled && (
                             <button
@@ -71,18 +71,6 @@ const MeetingCard = ({ meeting }) => {
                             Join Meeting
                             </button>
                         )}
-                    </div>:
-                    <div className="mt-4 flex justify-between">
-                        {
-                            isEnded?
-                            <div className='flex'>
-                                <TiTick className='text-3xl text-blue-500'/>
-                                <h3 className='text-lg font-medium text-blue-500'>Completed</h3>
-                            </div>:
-                            <div>
-                                <h3 className='text-lg font-medium text-red-500'>Cancelled</h3>
-                            </div>
-                        }
                     </div>
                 }
                 
