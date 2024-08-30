@@ -21,12 +21,12 @@ const GuideCard = ({ guide }) => {
   const closeDialog = () => setIsDialogOpen(false);
 
   return (
-    <div className="mx-auto cursor-pointer h-fit bg-white rounded-xl shadow-md hover:shadow-xl hover:shadow-gray-400 ease-in-out duration-200 w-fit max-w-[33rem]">
+    <div className="mx-auto cursor-pointer md:h-[18rem] bg-white rounded-xl shadow-md hover:shadow-xl hover:shadow-gray-400 ease-in-out duration-200 w-fit max-w-[30rem]">
       <div className="md:flex">
         <div className="min-w-44">
-          <img className="md:w-60 w-full md:h-full h-60 object-cover" src={guide.profile} alt="Guide Profile" />
+          <img className="md:w-60 w-full md:h-[18rem] h-60 object-cover" src={guide.profile} alt="Guide Profile" />
         </div>
-        <div className="p-3 pt-4 w-[22rem]">
+        <div className="p-3 pt-3 w-[22rem]">
           <Link to={`/user/${guide.id}`} className="uppercase tracking-wide text-sm text-indigo-500 font-semibold hover:underline">{guide.username}</Link>
           <a href="#" className="block mt-1 text-lg leading-tight font-medium text-gray-700 ">{guide.collegeName}</a>
           <p className="mt-2 text-blue-400 border-blue-200 border-2 w-fit px-2 py-0.5 rounded-md shadow-sm text-sm"> {guide.batchYear}</p>
